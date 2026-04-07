@@ -1,4 +1,4 @@
-# django-req-generator 🚀
+# django-req-generator
 
 **Generador avanzado de `requirements.txt` / Advanced `requirements.txt` generator**
 
