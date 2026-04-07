@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "django-req-generator"
+version = "0.1.0"
+authors = [
+  { name = "Oscar Higuera", email = "higuera86@gmail.com" },
+]
+description = "Generador de requirements.txt avanzado para Django con análisis estático y dinámico."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Framework :: Django",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "django>=3.2",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/rraczo/django-req-generator"
+
+[tool.hatch.build.targets.wheel]
+packages = ["django_req_generator"]
