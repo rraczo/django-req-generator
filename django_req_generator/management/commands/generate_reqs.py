@@ -118,28 +118,29 @@ class Command(BaseCommand):
                         if report["success"]:
                             self.stdout.write(self.style.SUCCESS(_("validate_success")))
                             break
-                    
-                    # Si falló, mirar si es por un módulo faltante (lazy import)
-                    missing_mod = report.get("missing_module")
-                    if missing_mod:
-                        confirm_add = input(_("prompt_missing_module", module=missing_mod)).lower()
-                        if confirm_add in ["y", "s", "yes", "si"]:
-                            # Mapear y añadir a la lista actual
-                            new_pkgs = mapper.map_modules_to_packages({missing_mod})
-                            final_packages.update(new_pkgs)
-                            
-                            # Sobrescribir el archivo con la nueva librería
-                            with open(output_file, "w", encoding="utf-8") as f:
-                                f.write(_("header_autogen") + "\n")
-                                f.write(_("header_repo") + "\n\n")
-                                for pkg, ver in sorted(final_packages.items()):
-                                    if ver == "???":
-                                        f.write(f"{pkg}\n")
-                                    else:
-                                        f.write(f"{pkg}=={ver}\n")
-                            
-                            # Reintentar validación
-                            continue
-                    
-                    self.stdout.write(self.style.ERROR(_("validate_error", output=report['output'])))
-                    break
+                        
+                        # Si falló, mirar si es por un módulo faltante (lazy import)
+                        missing_mod = report.get("missing_module")
+                        if missing_mod:
+                            confirm_add = input(_("prompt_missing_module", module=missing_mod)).lower()
+                            if confirm_add in ["y", "s", "yes", "si"]:
+                                # Mapear y añadir a la lista actual
+                                new_pkgs = mapper.map_modules_to_packages({missing_mod})
+                                final_packages.update(new_pkgs)
+                                
+                                # Sobrescribir el archivo con la nueva librería
+                                with open(output_file, "w", encoding="utf-8") as f:
+                                    f.write(_("header_autogen") + "\n")
+                                    f.write(_("header_repo") + "\n\n")
+                                    for pkg, ver in sorted(final_packages.items()):
+                                        if ver == "???":
+                                            f.write(f"{pkg}\n")
+                                        else:
+                                            f.write(f"{pkg}=={ver}\n")
+                                
+                                # Reintentar validación
+                                continue
+                        
+                        self.stdout.write(self.style.ERROR(_("validate_error", output=report['output'])))
+                        break
+
