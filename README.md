@@ -1,10 +1,10 @@
 # django-req-generator 🚀
 
-**Generador inteligente de `requirements.txt` / Smart `requirements.txt` generator**
+**Generador avanzado de `requirements.txt` / Advanced `requirements.txt` generator**
 
 ---
 
-## 🇪🇸 Español
+## 🇲🇽 Español
 
 ### Descripción
 Este plugin para Django sirve para empaquetar tu proyecto e instalarlo de forma limpia en otros entornos (Docker, Servidores de Producción, CI/CD). Está específicamente diseñado para manejar proyectos Django complejos donde no basta con un simple `pip freeze`.
