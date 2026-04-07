@@ -8,7 +8,7 @@ version = "0.1.1"
 authors = [
   { name = "Oscar Higuera", email = "higuera86@gmail.com" },
 ]
-description = "Generador de requirements.txt avanzado para Django con análisis estático y dinámico."
+description = "Advanced requirements.txt generator for Django. Self-healing, PyPI dynamic mapping, and venv validation."
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
