@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django-req-generator"
-version = "0.1.2"
+version = "0.1.3"
 authors = [
   { name = "Oscar Higuera", email = "higuera86@gmail.com" },
 ]

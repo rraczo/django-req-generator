@@ -18,6 +18,26 @@ Este plugin para Django sirve para empaquetar tu proyecto e instalarlo de forma 
 - 🧪 **Validación en Venv**: Crea un entorno virtual temporal para asegurar que el archivo generado permite que el proyecto arranque.
 - 🌎 **Multilingüe**: Soporta comandos y mensajes en Español e Inglés.
 
+### Instalación
+
+1. **Instala el paquete:**
+```bash
+pip install django-req-generator
+```
+
+2. **Regístralo en Django:**
+Añade `django_req_generator` a tus `INSTALLED_APPS` en tu archivo `settings.py`:
+
+```python
+# settings.py
+INSTALLED_APPS = [
+    ...,
+    'django_req_generator',
+    ...,
+]
+```
+> **Nota:** El plugin se detectará automáticamente a sí mismo y se incluirá en tu `requirements.txt` al generar el archivo.
+
 ### Uso
 ```bash
 # Generación estándar con backup automático
@@ -45,6 +65,26 @@ This Django plugin is designed to package your project and install it cleanly in
 - 🤖 **Interactive Self-Healing**: During validation, if a missing module is found (`ModuleNotFoundError`), it asks if you want to add it and retries the validation on the fly.
 - 🧪 **Venv Validation**: Creates a temporary virtual environment to ensure the generated file allows the project to start.
 - 🌎 **Multilingual**: Supports commands and console messages in both Spanish and English.
+
+### Installation
+
+1. **Install the package:**
+```bash
+pip install django-req-generator
+```
+
+2. **Register it in Django:**
+Add `django_req_generator` to your `INSTALLED_APPS` in your `settings.py` file:
+
+```python
+# settings.py
+INSTALLED_APPS = [
+    ...,
+    'django_req_generator',
+    ...,
+]
+```
+> **Note:** The plugin will automatically detect itself and include it in your `requirements.txt` when generating the file.
 
 ### Usage
 ```bash
