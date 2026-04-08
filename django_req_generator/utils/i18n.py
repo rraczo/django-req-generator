@@ -29,6 +29,8 @@ MESSAGES = {
         "prompt_continue": "¿Desea continuar con la validación? (S/n): ",
         "validate_skipped": "Validación saltada por el usuario.",
         "prompt_missing_module": "Se detectó que falta el módulo '{module}'. ¿Desea agregarlo a los requisitos y reintentar? (S/n): ",
+        "prompt_pip_failed": "Pip no pudo encontrar el paquete '{package}'. \nElija una opción: [R]emplazar por el nombre correcto, [B]orrarlo del archivo, [C]ancelar: ",
+        "prompt_new_name": "Introduzca el nuevo nombre para '{package}': ",
     },
     "en": {
         "command_help": "Generates a requirements.txt file based on static and configuration analysis.",
@@ -56,6 +58,8 @@ MESSAGES = {
         "prompt_continue": "Do you want to continue with validation? (Y/n): ",
         "validate_skipped": "Validation skipped by user.",
         "prompt_missing_module": "Module '{module}' was detected as missing. Would you like to add it to requirements and retry? (Y/n): ",
+        "prompt_pip_failed": "Pip could not find package '{package}'. \nChoose an option: [R]eplace with correct name, [B]elete from file, [C]ancel: ",
+        "prompt_new_name": "Enter the new name for '{package}': ",
     }
 }
 

@@ -119,7 +119,7 @@ class Command(BaseCommand):
                             self.stdout.write(self.style.SUCCESS(_("validate_success")))
                             break
                         
-                        # Si falló, mirar si es por un módulo faltante (lazy import)
+                        # 1. Si falló, mirar si es por un módulo faltante (lazy import)
                         missing_mod = report.get("missing_module")
                         if missing_mod:
                             confirm_add = input(_("prompt_missing_module", module=missing_mod)).lower()
@@ -139,6 +139,47 @@ class Command(BaseCommand):
                                             f.write(f"{pkg}=={ver}\n")
                                 
                                 # Reintentar validación
+                                continue
+
+                        # 2. Si falló por un paquete inexistente en Pip (error 404 de PyPI / No matching distribution)
+                        failed_pkg = report.get("failed_package")
+                        if failed_pkg:
+                            action = input(_("prompt_pip_failed", package=failed_pkg)).lower()
+                            
+                            if action in ["r", "replace", "remplazar"]:
+                                new_name = input(_("prompt_new_name", package=failed_pkg)).strip()
+                                if new_name:
+                                    # Eliminar el nombre erróneo y añadir el correcto
+                                    if failed_pkg in final_packages:
+                                        del final_packages[failed_pkg]
+                                    
+                                    new_pkgs = mapper.map_modules_to_packages({new_name})
+                                    final_packages.update(new_pkgs)
+                                    
+                                    # Sobrescribir el archivo
+                                    with open(output_file, "w", encoding="utf-8") as f:
+                                        f.write(_("header_autogen") + "\n")
+                                        f.write(_("header_repo") + "\n\n")
+                                        for pkg, ver in sorted(final_packages.items()):
+                                            if ver == "???":
+                                                f.write(f"{pkg}\n")
+                                            else:
+                                                f.write(f"{pkg}=={ver}\n")
+                                    continue
+
+                            elif action in ["b", "borrar", "delete"]:
+                                # Simplemente eliminar el problemático
+                                if failed_pkg in final_packages:
+                                    del final_packages[failed_pkg]
+                                    
+                                with open(output_file, "w", encoding="utf-8") as f:
+                                    f.write(_("header_autogen") + "\n")
+                                    f.write(_("header_repo") + "\n\n")
+                                    for pkg, ver in sorted(final_packages.items()):
+                                        if ver == "???":
+                                            f.write(f"{pkg}\n")
+                                        else:
+                                            f.write(f"{pkg}=={ver}\n")
                                 continue
                         
                         self.stdout.write(self.style.ERROR(_("validate_error", output=report['output'])))

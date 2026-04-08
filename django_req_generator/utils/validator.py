@@ -38,11 +38,22 @@ def validate_requirements(requirements_file_path, project_root, settings_module=
             
             # 2. Instalar el propio plugin solo la primera vez
             if plugin_root:
-                log(_("log_install_plugin", path=plugin_root))
-                subprocess.run(
-                    [pip_exe, "install", plugin_root],
-                    check=True, capture_output=True, text=True
-                )
+                # Verificar si es una ruta de desarrollo válida (tiene pyproject.toml)
+                is_dev_path = os.path.exists(os.path.join(plugin_root, "pyproject.toml"))
+                
+                if is_dev_path:
+                    log(_("log_install_plugin", path=plugin_root))
+                    subprocess.run(
+                        [pip_exe, "install", plugin_root],
+                        check=True, capture_output=True, text=True
+                    )
+                else:
+                    # Si no es ruta de desarrollo, instalar la versión de Pip
+                    log(_("log_install_plugin", path="PyPI (django-req-generator)"))
+                    subprocess.run(
+                        [pip_exe, "install", "django-req-generator"],
+                        check=True, capture_output=True, text=True
+                    )
 
         # 3. Instalar los requisitos (Pip es inteligente y solo instalará lo nuevo)
         log(_("log_install_reqs", file=requirements_file_path))
@@ -71,11 +82,25 @@ def validate_requirements(requirements_file_path, project_root, settings_module=
         output = (e.stdout or "") + (e.stderr or "")
         report["output"] = output
         
-        # Intentar extraer el módulo faltante del traceback
+        # 1. Intentar extraer módulo faltante (ModuleNotFoundError en Django check)
         import re
-        match = re.search(r"ModuleNotFoundError: No module named '([^']+)'", output)
-        if match:
-            report["missing_module"] = match.group(1)
+        match_mod = re.search(r"ModuleNotFoundError: No module named '([^']+)'", output)
+        if match_mod:
+            report["missing_module"] = match_mod.group(1)
+            
+        # 2. Intentar extraer paquete fallido de Pip (No matching distribution)
+        import re
+        match_pip = re.search(r"satisfies the requirement\s+([a-zA-Z0-9\-_.]+)", output, re.IGNORECASE)
+        if not match_pip:
+            # Segunda oportunidad: "No matching distribution found for NOMBRE"
+            match_pip = re.search(r"matching distribution found for\s+([a-zA-Z0-9\-_.]+)", output, re.IGNORECASE)
+            
+        if match_pip:
+            report["failed_package"] = match_pip.group(1).strip()
+
+
+
+            
     except Exception as e:
         report["success"] = False
         report["output"] = str(e)

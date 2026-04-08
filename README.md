@@ -14,7 +14,7 @@ Este plugin para Django sirve para empaquetar tu proyecto e instalarlo de forma 
 - 🧩 **Inspección Profunda de Django**: Analiza `INSTALLED_APPS`, `MIDDLEWARE`, `DATABASES` (detecta drivers como `oracledb`), y `CACHES` (detecta `django-redis` y `pymemcache`).
 - 🧹 **Limpieza Automática**: Filtra la librería estándar de Python y tus propios módulos locales (`apps`, `models`, `serializers`, etc.).
 - 🔗 **Resolución Dinámica PyPI**: No usa mapeos manuales fallidos; pregunta directamente a la API de PyPI para encontrar el paquete correcto.
-- 🤖 **Auto-curación Interactiva**: Durante la validación, si detecta un módulo faltante (`ModuleNotFoundError`), te pregunta si quieres añadirlo y reintenta la validación en caliente.
+- 🤖 **Auto-curación Interactiva**: Durante la validación, si detecta un módulo faltante (`ModuleNotFoundError`) o un fallo de Pip, te pregunta si quieres corregirlo y reintenta la validación en caliente.
 - 🧪 **Validación en Venv**: Crea un entorno virtual temporal para asegurar que el archivo generado permite que el proyecto arranque.
 - 🌎 **Multilingüe**: Soporta comandos y mensajes en Español e Inglés.
 
@@ -62,7 +62,7 @@ This Django plugin is designed to package your project and install it cleanly in
 - 🧩 **Deep Django Inspection**: Analyzes `INSTALLED_APPS`, `MIDDLEWARE`, `DATABASES` (detects drivers like `oracledb`), and `CACHES` (detects `django-redis` and `pymemcache`).
 - 🧹 **Automatic Cleanup**: Filters out Python's standard library and your own local modules (`apps`, `models`, `serializers`, etc.).
 - 🔗 **Dynamic PyPI Resolution**: Replaces outdated manual mappings by querying the PyPI API directly for the correct package name.
-- 🤖 **Interactive Self-Healing**: During validation, if a missing module is found (`ModuleNotFoundError`), it asks if you want to add it and retries the validation on the fly.
+- 🤖 **Interactive Self-Healing**: During validation, if a missing module (`ModuleNotFoundError`) or a Pip failure is found, it asks if you want to fix it and retries the validation on the fly.
 - 🧪 **Venv Validation**: Creates a temporary virtual environment to ensure the generated file allows the project to start.
 - 🌎 **Multilingual**: Supports commands and console messages in both Spanish and English.
 
